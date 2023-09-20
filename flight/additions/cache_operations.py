@@ -1,8 +1,9 @@
+import os
 import redis
 import json
 
-HOST = 'localhost'
-PORT = 6379
+HOST = os.environ.get('CACHE_HOST')
+PORT = os.environ.get('CACHE_PORT')
 
 async def check_offers_existance(request_id): # Cache operation
 

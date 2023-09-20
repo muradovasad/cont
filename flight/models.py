@@ -1,19 +1,20 @@
+import os
 import json
 import uuid
 import asyncpg
 import psycopg2
+from dotenv import load_dotenv
 
-DB_HOST = 'localhost'
-DB_PORT = '5432'
-DB_USER = 'postgres'
-DB_PASS = '1111'
+load_dotenv()
 
-HOST = DB_HOST
-PORT = DB_PORT
-USER = DB_USER
-PASS = DB_PASS
+HOST = os.environ.get('DB_HOST')
+PORT = os.environ.get('DB_PORT')
+USER = os.environ.get('DB_USER')
+PASS = os.environ.get('DB_PASS')
 
-def create_database(db_name='test_content'):
+DEFAULT_DB_NAME = os.environ.get('DEFAULT_DB_NAME')
+
+def create_database(db_name=DEFAULT_DB_NAME):
     conn = psycopg2.connect(
         host     = HOST,
         port     = PORT,
@@ -71,7 +72,7 @@ def create_database(db_name='test_content'):
     cursor.close()
     conn.close()
 
-async def insert_data(system_id, provider_id, provider_name, offers, db_name='test_content'):
+async def insert_data(system_id, provider_id, provider_name, offers, db_name=DEFAULT_DB_NAME):
     conn = await asyncpg.connect(
         host     = HOST,
         port     = PORT,
@@ -87,7 +88,7 @@ async def insert_data(system_id, provider_id, provider_name, offers, db_name='te
     
     await conn.close()
 
-async def insert_system(system_id, system_name, system_type, auth_data_fields, db_name='test_content'):
+async def insert_system(system_id, system_name, system_type, auth_data_fields, db_name=DEFAULT_DB_NAME):
     result = {
         'status': 'success',
         'message': 'new system successfully has been added'
@@ -114,7 +115,7 @@ async def insert_system(system_id, system_name, system_type, auth_data_fields, d
         await conn.close()
         return result
 
-async def get_system_name(system_id, db_name='test_content'):
+async def get_system_name(system_id, db_name=DEFAULT_DB_NAME):
     conn = await asyncpg.connect(
         host     = HOST,
         port     = PORT,
