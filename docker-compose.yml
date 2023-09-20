@@ -1,0 +1,53 @@
+version: '3.7'
+services:
+  postgres33:
+    image: postgres:13.3
+    container_name: postgres_33
+    environment:
+      POSTGRES_DB: "content_module"
+      POSTGRES_USER: "content_module"
+      POSTGRES_PASSWORD: "pgpwd4habr"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./2. Init Database:/docker-entrypoint-initdb.d
+      - "./database:/var/lib/postgresql/data"
+    ports:
+      - "54333:5432"
+
+    restart: unless-stopped
+  
+  redis33:
+      image: 'bitnami/redis:latest'
+      container_name: redis_33
+      volumes:
+        - "./redis-data:/var/lib/redis"
+        - "./redis.conf:/usr/local/etc/redis/redis.conf"
+      ports:
+        - 6379:6379
+      environment:
+         - ALLOW_EMPTY_PASSWORD=yes
+      
+  content_module:
+    image: content_module:0.0.1
+    depends_on:
+      - postgres33
+      - redis33
+    volumes:
+      - .:/content_module
+    build:
+      context: ./
+    environment:
+      - DEFAULT_DB_NAME=content_module
+      - DB_USER=content_module
+      - DB_PASS=pgpwd4habr
+      - DB_HOST=postgres_33
+      - DB_PORT=5432
+      - CACHE_HOST=redis_33
+      - CACHE_PORT=6379
+    expose: 
+      - 8033
+    ports:
+      - "8033:8033"
+    command: >
+      sh -c "python3 run.py"
+    restart: always
