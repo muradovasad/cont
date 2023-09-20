@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add System</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#system_form").submit(function(e) {
+                e.preventDefault();
+                var formData = {
+                    "system_id": $("#system_id").val(),
+                    "system_name": $("#system_name").val(),
+                    "system_type": $("#system_type").val(),
+                    "auth_data_fields": []
+                };
+
+                $(".auth_data_field").each(function() {
+                    var fieldValue = $(this).val();
+                    formData.auth_data_fields.push(fieldValue);
+                });
+
+                $.ajax({
+                    url: '/add-new-system/',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        // Handle success response
+                        console.log(response);
+                        $('body').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error response
+                        console.error(error);
+                        $('body').html(xhr.responseText);
+                    }
+                });
+            });
+
+            $("#add_field_button").click(function(e) {
+                e.preventDefault();
+                var fieldHtml = '<input type="text" class="auth_data_field" required><br><br>';
+                $("#fields_container").append(fieldHtml);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Add System</h1>
+    <form id="system_form">
+        <label for="system_id">System ID:</label>
+        <input type="text" id="system_id" required><br><br>
+
+        <label for="system_name">System Name:</label>
+        <input type="text" id="system_name" required><br><br>
+
+        <label for="system_type">System Type:</label>
+        <input type="text" id="system_type" required><br><br>
+
+        <label for="auth_data_fields">Auth Data Fields:</label>
+        <div id="fields_container">
+            <input type="text" class="auth_data_field" required><br><br>
+        </div>
+        <button id="add_field_button">Add Field</button><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

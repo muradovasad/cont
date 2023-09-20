@@ -1,0 +1,13 @@
+{% extends "_base.xml" %}
+
+{% block request %}
+<shop:Mixvel_OrderRulesRQ xmlns:shop="https://www.mixvel.com/API/XSD/Mixvel_OrderRulesRQ/1_00">
+    <Request>
+        <RulesCoreRequest>
+            <OfferRequest>
+                <OfferID>{{ offerId }}</OfferID>
+            </OfferRequest>
+        </RulesCoreRequest>
+    </Request>
+</shop:Mixvel_OrderRulesRQ>
+{% endblock %}

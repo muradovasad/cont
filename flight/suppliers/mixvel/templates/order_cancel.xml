@@ -1,0 +1,11 @@
+{% extends "_base.xml" %}
+
+{% block request %}
+<m:Mixvel_OrderCancelRQ xmlns:m="https://www.mixvel.com/API/XSD/Mixvel_OrderCancelRQ/1_01">
+    <Request>
+        <MixOrder>
+            <MixOrderID>{{ mix_order_id }}</MixOrderID>
+        </MixOrder>
+    </Request>
+</m:Mixvel_OrderCancelRQ>
+{% endblock %}

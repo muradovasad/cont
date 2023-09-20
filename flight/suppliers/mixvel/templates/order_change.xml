@@ -1,0 +1,19 @@
+{% extends "_base.xml" %}
+
+{% block request %}
+<o:Mixvel_OrderChangeRQ xmlns:o="https://www.mixvel.com/API/XSD/Mixvel_OrderChangeRQ/1_00">
+    <Request>
+        <MixOrder>
+            <MixOrderID>{{ mix_order_id }}</MixOrderID>
+        </MixOrder>
+        <PaymentFunctions>
+            <PaymentProcessingDetails>
+                <Amount CurCode="RUB">{{ amount }}</Amount>
+                <PaymentProcessingDetailsPaymentMethod>
+                    <OtherPaymentMethod />
+                </PaymentProcessingDetailsPaymentMethod>
+            </PaymentProcessingDetails>
+        </PaymentFunctions>
+    </Request>
+</o:Mixvel_OrderChangeRQ>
+{% endblock %}

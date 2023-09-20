@@ -1,0 +1,50 @@
+{% extends "_base.xml" %}
+
+{% block request %}
+<shop:Mixvel_AirShoppingRQ xmlns:shop="https://www.mixvel.com/API/XSD/Mixvel_AirShoppingRQ/1_01">
+    <Request>
+        <FlightRequest>
+            <FlightRequestOriginDestinationsCriteria>
+                {% for leg in itinerary %}
+                <OriginDestCriteria>
+                    <CabinType>
+                        <CabinTypeCode>{{ leg.cabin }}</CabinTypeCode>
+                        <PrefLevel>
+                            <PrefLevelCode>Required</PrefLevelCode>
+                        </PrefLevel>
+                    </CabinType>
+                    <DestArrivalCriteria>
+                        <IATA_LocationCode>{{ leg.destination }}</IATA_LocationCode>
+                    </DestArrivalCriteria>
+                    <OriginDepCriteria>
+                        <DateRangeStart>{{ leg.departure }}</DateRangeStart>
+                        <DateRangeEnd>{{ leg.departure }}</DateRangeEnd>
+                        <IATA_LocationCode>{{ leg.origin }}</IATA_LocationCode>
+                    </OriginDepCriteria>
+                </OriginDestCriteria>
+                {% endfor %}
+            </FlightRequestOriginDestinationsCriteria>
+        </FlightRequest>
+        <Paxs>
+            {% for pax in paxes %}
+            <Pax>
+                <PaxID>{{ pax.pax_id }}</PaxID>
+                <PTC>{{ pax.ptc }}</PTC>
+            </Pax>
+            {% endfor %}
+        </Paxs>
+        <ShoppingCriteria>
+            <CarrierCriteria>
+                <Carrier>
+                    <AirlineDesigCode>UT</AirlineDesigCode>
+                </Carrier>
+                <CarrierPrefID>Carrier-1</CarrierPrefID>
+            </CarrierCriteria>
+            <PricingMethodCriteria>
+                <BestPricingOptionText>Extended</BestPricingOptionText>
+                <CarrierMixInd>true</CarrierMixInd>
+            </PricingMethodCriteria>
+        </ShoppingCriteria>
+    </Request>
+</shop:Mixvel_AirShoppingRQ>
+{% endblock %}

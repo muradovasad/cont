@@ -1,0 +1,5 @@
+{% extends "_base.xml" %}
+
+{% block request %}
+<GetDictionaryCarriersRQ xmlns="https://www.mixvel.com/API/XSD/mixvel_dictionaries/1_00" />
+{% endblock %}

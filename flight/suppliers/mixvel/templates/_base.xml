@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MixEnv:Envelope xmlns:MixEnv="https://www.mixvel.com/API/XSD/mixvel_envelope/1_06">
+    <Header/>
+    <Body>
+        <MessageInfo MessageId="{{ message_id }}" TimeSent="{{ time_sent }}"/>
+        <AppData>
+            {% block request %}{% endblock %}
+        </AppData>
+    </Body>
+</MixEnv:Envelope>

@@ -1,0 +1,69 @@
+{% extends "_base.xml" %}
+
+{% block request %}
+<m:Mixvel_OrderCreateRQ xmlns:m="https://www.mixvel.com/API/XSD/Mixvel_OrderCreateRQ/1_01">
+    <Request>
+        <CreateOrder>
+            <SelectedOffer>
+                <OfferRefID>{{ selected_offer.offer_ref_id }}</OfferRefID>
+                {% for selected_offer_item in selected_offer.selected_offer_items %}
+                <SelectedOfferItem>
+                    <OfferItemRefID>{{ selected_offer_item.offerItemId }}</OfferItemRefID>
+                    <PaxRefID>{{ selected_offer_item.paxRefId }}</PaxRefID>
+                </SelectedOfferItem>
+                {% endfor %}
+            </SelectedOffer>
+        </CreateOrder>
+        <DataLists>
+            <ContactInfoList>
+                {% for pax in paxes %}
+                {% if pax.email is not none and pax.phone is not none %}
+                <ContactInfo>
+                    <ContactInfoID>Contact-{{ loop.index }}</ContactInfoID>
+                    {% if pax.email is not none %}
+                    <EmailAddress>
+                        <ContactTypeText>personal</ContactTypeText>
+                        <EmailAddressText>{{ pax.email }}</EmailAddressText>
+                    </EmailAddress>
+                    {% endif %}
+                    {% if pax.phone is not none %}
+                    <Phone>
+                        <ContactTypeText>personal</ContactTypeText>
+                        <PhoneNumber>{{ pax.phone }}</PhoneNumber>
+                    </Phone>
+                    {% endif %}
+                </ContactInfo>
+                {% endif %}
+                {% endfor %}
+            </ContactInfoList>
+            <PaxList>
+                {% for pax in paxes %}
+                <Pax>
+                    {% if pax.email is not none or pax.phone is not none %}
+                    <ContactInfoRefID>Contact-{{ loop.index }}</ContactInfoRefID>
+                    {% endif %}
+                    <IdentityDoc>
+                        <ExpiryDate>{{ pax.doc.expiry_date }}</ExpiryDate>
+                        <IdentityDocID>{{ pax.doc.doc_id }}</IdentityDocID>
+                        <IdentityDocTypeCode>{{ pax.doc.type_code }}</IdentityDocTypeCode>
+                        <IssuingCountryCode>{{ pax.doc.issuing_country_code }}</IssuingCountryCode>
+                        <Surname>{{ pax.individual.surname }}</Surname>
+                    </IdentityDoc>
+                    <Individual>
+                        <Birthdate>{{ pax.individual.birthdate }}</Birthdate>
+                        <GenderCode>{{ pax.individual.gender }}</GenderCode>
+                        <GivenName>{{ pax.individual.given_name }}</GivenName>
+                        {% if pax.individual.middle_name %}
+                        <MiddleName>{{ pax.individual.middle_name }}</MiddleName>
+                        {% endif %}
+                        <Surname>{{ pax.individual.surname }}</Surname>
+                    </Individual>
+                    <PaxID>{{ pax.pax_id }}</PaxID>
+                    <PTC>{{ pax.ptc }}</PTC>
+                </Pax>
+                {% endfor %}
+            </PaxList>
+        </DataLists>
+    </Request>
+</m:Mixvel_OrderCreateRQ>
+{% endblock %}

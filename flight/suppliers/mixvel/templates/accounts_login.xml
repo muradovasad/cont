@@ -1,0 +1,9 @@
+{% extends "_base.xml" %}
+
+{% block request %}
+<a:Auth xmlns:a="https://www.mixvel.com/API/XSD/mixvel_auth/1_01">
+    <Login>{{ login }}</Login>
+    <Password>{{ password }}</Password>
+    <StructureUnitID>{{ structure_unit_id }}</StructureUnitID>
+</a:Auth>
+{% endblock %}

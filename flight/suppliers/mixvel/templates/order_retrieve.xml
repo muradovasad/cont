@@ -1,0 +1,13 @@
+{% extends "_base.xml" %}
+
+{% block request %}
+<o:Mixvel_OrderRetrieveRQ xmlns:o="https://www.mixvel.com/API/XSD/Mixvel_OrderRetrieveRQ/1_00">
+    <Request>
+        <OrderFilterCriteria>
+            <MixOrder>
+                <MixOrderID>{{ mix_order_id }}</MixOrderID>
+            </MixOrder>
+        </OrderFilterCriteria>
+    </Request>
+</o:Mixvel_OrderRetrieveRQ>
+{% endblock %}

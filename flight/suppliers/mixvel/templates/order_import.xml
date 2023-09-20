@@ -1,0 +1,22 @@
+{% extends "_base.xml" %}
+
+{% block request %}
+<m:Mixvel_OrderImportRQ xmlns:m="https://www.mixvel.com/API/XSD/Mixvel_OrderImportRQ/1_01">
+    <Request>
+        <ExternalOrderRequest>
+            <BookingRefID>{{ booking_ref_id }}</BookingRefID>
+            <SystemCode>{{ system_code }}</SystemCode>
+        </ExternalOrderRequest>
+        <DataLists>
+            <PaxList>
+                <Pax>
+                    <Individual>
+                        <Surname>{{ sur_name }}</Surname>
+                    </Individual>
+                    <PaxID>Pax-1</PaxID>
+                </Pax>
+            </PaxList>
+        </DataLists>
+    </Request>
+</m:Mixvel_OrderImportRQ>
+{% endblock %}
