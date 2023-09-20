@@ -41,7 +41,7 @@ services:
       - DB_USER=content_module
       - DB_PASS=pgpwd4habr
       - DB_HOST=postgres_33
-      - DB_PORT=5432
+      - DB_PORT=54333
       - CACHE_HOST=redis_33
       - CACHE_PORT=6379
     expose: 
@@ -50,4 +50,4 @@ services:
       - "8033:8033"
     command: >
       sh -c "python3 run.py"
-    restart: unless-stopped
+    restart: always
