@@ -16,16 +16,6 @@ services:
 
     restart: unless-stopped
   
-  redis33:
-      image: 'bitnami/redis:latest'
-      container_name: redis_33
-      volumes:
-        - "./redis-data:/var/lib/redis"
-        - "./redis.conf:/usr/local/etc/redis/redis.conf"
-      ports:
-        - 6379:6379
-      environment:
-         - ALLOW_EMPTY_PASSWORD=yes
       
   content_module:
     image: content_module:0.0.1
@@ -51,3 +41,14 @@ services:
     command: >
       sh -c "python3 run.py"
     restart: always
+
+  redis33:
+      image: 'bitnami/redis:latest'
+      container_name: redis_33
+      volumes:
+        - "./redis-data:/var/lib/redis"
+        - "./redis.conf:/usr/local/etc/redis/redis.conf"
+      ports:
+        - 6379:6379
+      environment:
+         - ALLOW_EMPTY_PASSWORD=yes
