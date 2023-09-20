@@ -50,4 +50,4 @@ services:
       - "8033:8033"
     command: >
       sh -c "python3 run.py"
-    restart: always
+    restart: unless-stopped
