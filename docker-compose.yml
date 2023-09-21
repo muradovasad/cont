@@ -4,12 +4,12 @@ services:
     image: postgres:13.3
     container_name: postgres_33
     environment:
-      POSTGRES_DB: "content_module"
+      POSTGRES_DB: "test_content"
       POSTGRES_USER: "content_module"
       POSTGRES_PASSWORD: "pgpwd4habr"
       PGDATA: "/var/lib/postgresql/data/pgdata"
     volumes:
-      - ./2. Init Database:/docker-entrypoint-initdb.d
+      - "./2. Init Database:/docker-entrypoint-initdb.d"
       - "./database:/var/lib/postgresql/data"
     ports:
       - "54333:5432"
@@ -27,7 +27,7 @@ services:
     build:
       context: ./
     environment:
-      - DEFAULT_DB_NAME=content_module
+      - DEFAULT_DB_NAME=test_content
       - DB_USER=content_module
       - DB_PASS=pgpwd4habr
       - DB_HOST=postgres_33
